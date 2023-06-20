@@ -25,11 +25,11 @@
       function hemicycle(options) {
         h = {
           rows: 10,
-          arc: 180,
-          dotsize: 5,
+          arc: 360,
+          dotsize: 4,
           selector: "body",
-          height: 450,
-          width: 900,
+          height: 600,
+          width: 600,
           partyorder: {
             "team one": 1,
             "team two": 2,
@@ -78,8 +78,8 @@
             "translate(" +
             h.width / 2 +
             "," +
-            (h.height - h.margin.bottom) +
-            ") rotate(180)";
+            (h.height - h.margin.bottom) / 2 +
+            ") rotate(360)";
           arc.attr("transform", arcTransform);
         };
 

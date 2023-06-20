@@ -1,0 +1,68 @@
+<html>
+  <style type="text/css">
+    
+  </style>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script> 
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        fillPros = {
+          nDots: 10,
+          selector: "body",
+          height: 600,
+          width: 600,
+        };
+      let svg = d3.select(fillPros.selector).append("svg").attr({
+        width: fillPros.width,
+        height: fillPros.height,
+      });
+
+      let circleGroup = svg.append("g").attr({ id: "circleGroup" });
+
+      let cicle = circleGroup
+      .append("circle")
+      .attr({
+        r: fillPros.width / 2,
+        transform: `translate(${fillPros.width / 2}, ${fillPros.width / 2})`,
+        fill: '#FFFDD0'
+      })
+
+      let dotsGroup = svg.append("g").attr({ id: "dotsGroup" });
+      const dotsData = [...Array(10000).keys()]
+
+      function getRandomInt(max, seed) {
+        const random = new Math.seedrandom(seed);
+        const number = Math.floor(random() * max)
+        return number
+      }
+
+      function getRandomCircleTraslation(circle) {
+        const r = fillPros.width / 2
+        const stepSize = (fillPros.width / 10)
+        const xT = getRandomInt(fillPros.width, circle)
+        const yBorder = ((r**2)-((xT-r)**2))**(1/2)
+        const yT = getRandomInt(yBorder) - getRandomInt(yBorder) + r
+        const t = `translate(${xT}, ${yT})`
+        return t
+      }
+
+      const dots = dotsGroup
+        .selectAll('circle')
+        .data(dotsData)
+        .enter()
+        .append('circle')
+        .transition()
+        .duration(1000)
+        .attr({
+          r: 1,
+          fill: 'black',
+          transform: (d) => `translate(${getRandomInt(fillPros.width, d)}, ${getRandomInt(fillPros.width, d+32)})`, 
+        })
+        .transition()
+        .duration(500)
+        .attr({
+          transform: getRandomCircleTraslation,
+        })
+    </script>
+  </body>
+</html>
